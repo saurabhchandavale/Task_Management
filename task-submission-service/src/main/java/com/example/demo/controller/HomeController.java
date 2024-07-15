@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
 	@GetMapping("/submission")
-	public ResponseEntity<String> homeController(){
+	public ResponseEntity<String> homeController() {
 		return new ResponseEntity<>("Welcome to task submission", HttpStatus.OK);
 	}
 

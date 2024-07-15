@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.example.demo.modal.UserDto;
 
-
-@FeignClient(name = "USER-SUBMISSION", url="http://localhost:5001")
+@FeignClient(name = "USER-SUBMISSION", url = "http://localhost:5001")
 public interface UserService {
-	
+
 	@GetMapping("/api/user/profile")
 	public UserDto getUserProfile(@RequestHeader("Authorization") String Jwt);
 

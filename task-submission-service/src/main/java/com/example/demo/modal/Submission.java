@@ -18,15 +18,15 @@ public class Submission {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
 	private long taskId;
-	
+
 	private String githubLink;
-	
+
 	private long userId;
-	
-	private String status ="PENDING";
-	
+
+	private String status = "PENDING";
+
 	private LocalDateTime submiDate;
 
 }

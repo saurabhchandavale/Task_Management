@@ -66,14 +66,14 @@ public class SubmissionController {
 		return new ResponseEntity<List<Submission>>(taskSubmissionByTaskId, HttpStatus.OK);
 
 	}
+
 	@PutMapping("/{Id}")
 	public ResponseEntity<Submission> acceptOrDeclineSubmission(@PathVariable long Id,
-			@RequestParam("status") String status,
-			@RequestHeader("Authorization") String jwt) throws Exception{
+			@RequestParam("status") String status, @RequestHeader("Authorization") String jwt) throws Exception {
+		System.out.println("SCE32: status " + status + " Id " + Id);
 		UserDto userProfile = userService.getUserProfile(jwt);
-		Submission acceptDeclineSubmission = submissionService.acceptDeclineSubmission(null, status);
-		return new ResponseEntity<Submission>(acceptDeclineSubmission,HttpStatus.OK);
+		Submission acceptDeclineSubmission = submissionService.acceptDeclineSubmission(Id, status);
+		return new ResponseEntity<Submission>(acceptDeclineSubmission, HttpStatus.CREATED);
 
-		
 	}
 }

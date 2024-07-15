@@ -12,6 +12,7 @@ import com.example.demo.repository.SubmissionRepository;
 import com.example.demo.service.SubmissionService;
 import com.example.demo.service.TaskService;
 import com.example.demo.service.UserService;
+
 @Service
 public class SubmissionServiceImpl implements SubmissionService {
 	@Autowired
@@ -23,8 +24,8 @@ public class SubmissionServiceImpl implements SubmissionService {
 
 	@Override
 	public Submission submitTask(long taskId, String githubLink, long userId, String jwt) throws Exception {
-		TaskDto taskById = taskService.getTaskById(userId, jwt);
-		if(taskById!=null) {
+		TaskDto taskById = taskService.getTaskById(taskId, jwt);
+		if (taskById != null) {
 			Submission submission = new Submission();
 			submission.setTaskId(taskId);
 			submission.setUserId(userId);
@@ -37,7 +38,8 @@ public class SubmissionServiceImpl implements SubmissionService {
 
 	@Override
 	public Submission getTaskSubmissionById(long submissionId) throws Exception {
-		return submissionRepository.findById(submissionId).orElseThrow(()-> new Exception("Submission not found by submission id " + submissionId));
+		return submissionRepository.findById(submissionId)
+				.orElseThrow(() -> new Exception("Submission not found by submission id " + submissionId));
 	}
 
 	@Override
@@ -51,15 +53,15 @@ public class SubmissionServiceImpl implements SubmissionService {
 	}
 
 	@Override
-	public Submission acceptDeclineSubmission(Long id, String status) throws Exception {
+	public Submission acceptDeclineSubmission(long id, String status) throws Exception {
 		Submission taskSubmissionById = getTaskSubmissionById(id);
+		System.out.println("SCE32: taskSubmissionById " + taskSubmissionById.getTaskId() + status);
+
 		taskSubmissionById.setStatus(status);
-		if(status.equalsIgnoreCase("ACCEPT")) {
-		taskService.completeTask(taskSubmissionById.getTaskId());
+		if (status.equalsIgnoreCase("ACCEPT")) {
+			taskService.completeTask(taskSubmissionById.getTaskId());
 		}
 		return submissionRepository.save(taskSubmissionById);
 	}
-
-
 
 }
